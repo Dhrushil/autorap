@@ -1,32 +1,55 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
-  </div>
+  <v-app>
+    <v-main class="app">
+      <v-container>
+        <h1>AutoRAP</h1>
+
+        <v-btn @click="rhyme">rhyme</v-btn>
+      </v-container>
+
+      <speechtotext />
+    </v-main>
+  </v-app>
 </template>
 
+
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+.app {
+  background-color: orange;
+  background-image: url("./assets/background.jpg");
 }
-
-#nav {
-  padding: 30px;
+.glassmorphic {
+  background: rgba(255, 0, 171, 0.25);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
 }
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
+.center {
+  margin: auto;
+  width: 50%;
 }
 </style>
+
+<script>
+import Speechtotext from "./components/speechtotext.vue";
+import axios from "axios";
+
+export default {
+  name: "speech_to_text",
+  components: {
+    Speechtotext,
+  },
+
+  methods: {
+    rhyme() {
+         axios
+            .get("https://api.datamuse.com/words?rel_rhy=yes")
+            .then((res) => {
+              console.log(res)
+            });
+    },
+  },
+};
+</script>
